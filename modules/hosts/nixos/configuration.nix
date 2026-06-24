@@ -16,8 +16,9 @@
       initialPassword = "123";
       extraGroups = [ "wheel" "networkmanager" ];
       description = "Simple";
+      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEfY4AqFEB76gUXJKVifON936yf/MdsOKTsmioQ3HDKi" ];
     };
-
+    programs.zsh.enable = true;
     environment.systemPackages = with pkgs; [
        vim git curl
     ];
