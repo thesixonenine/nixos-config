@@ -9,8 +9,17 @@
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+    # User configuration
+    users.users.simple = {
+      isNormalUser = true;
+      shell = pkgs.zsh;
+      initialPassword = "123";
+      extraGroups = [ "wheel" "networkmanager" ];
+      description = "Simple";
+    };
+
     environment.systemPackages = with pkgs; [
-       vim
+       vim git curl
     ];
   };
 
