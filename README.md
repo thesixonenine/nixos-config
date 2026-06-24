@@ -2,14 +2,20 @@
 
 ## Install NixOS
 
-1. 在虚拟机软件中使用 NixOS 的图形化 ISO 文件进行安装
-2. 在 NixOS 中配置固定 IP 
-3. 在宿主机中通过 ssh-copy-id 将宿主机公钥复制到 NixOS
-4. 在宿主机中用 ssh 登录 NixOS
+直接在虚拟机软件中使用 NixOS 的图形化 ISO 文件进行安装默认 GNOME 桌面环境
 
-> static IP /publicKey/ssh/proxy/vim_git_curl
+安装好后为了好从宿主机进行操作, 所以要通过 SSH 连接到 NiOS 中
 
-## Enable OpenSSH
+1. 在 NixOS 中图形化配置固定 IP (桌面右上角网络标识)
+2. 在 NixOS 中用终端配置启动 OpenSSH (通过 Console 应用, 参考下面的 `Enable OpenSSH`)
+3. 构建新世代(参考下面的 `Rebuild Generation`)并重启 NixOS 虚拟机
+4. 在宿主机中通过 SSH 连接 NixOS 虚拟机
+
+然后就可以按以下步骤在宿主机中继续配置 NixOS 了
+
+## OpenSSH
+
+### Enable OpenSSH
 
 edit `/etc/nixos/configuration.nix`
 
@@ -25,13 +31,25 @@ services.openssh = {
 };
 ```
 
-rebuild generation
+or only enable openssh
 
 ```bash
-sudo nixos-rebuild switch
+services.openssh.enable = true;
 ```
 
-## Enable Proxy
+### PublicKey
+
+use `ssh-copy-id` or edit `/etc/nixos/configuration.nix`
+
+```bash
+users.users."simple".openssh.authorizedKeys.keys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEfY4AqFEB76gUXJKVifON936yf/MdsOKTsmioQ3HDKi"
+];
+```
+
+## Network
+
+### Enable Proxy
 
 edit `/etc/nixos/configuration.nix`
 
@@ -44,6 +62,43 @@ test
 
 ```bash
 curl -x http://192.168.137.1:1080 https://www.google.com
+```
+
+### Static IP
+
+`存疑`
+
+edit `/etc/nixos/configuration.nix`
+
+```bash
+networking.interfaces.eth0.ipv4.addresses = [
+  {
+    address = "192.168.137.13";
+    prefixLength = 24;
+  }
+];
+networking.defaultGateway = "192.168.137.1";
+networking.nameservers = [
+  "223.5.5.5"
+  "223.6.6.6"
+];
+networking.useDHCP = false;
+```
+
+## Software
+
+edit `/etc/nixos/configuration.nix`
+
+```bash
+environment.systemPackages = with pkgs; [
+  vim git curl
+];
+```
+
+## Rebuild Generation
+
+```bash
+sudo nixos-rebuild switch --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
 ```
 
 ## Fetch My NixOS Config
