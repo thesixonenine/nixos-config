@@ -7,6 +7,8 @@
 3. 在宿主机中通过 ssh-copy-id 将宿主机公钥复制到 NixOS
 4. 在宿主机中用 ssh 登录 NixOS
 
+> static IP /publicKey/ssh/proxy/vim_git_curl
+
 ## Enable OpenSSH
 
 edit `/etc/nixos/configuration.nix`
