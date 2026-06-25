@@ -100,6 +100,20 @@ environment.systemPackages = with pkgs; [
 ```bash
 sudo nixos-rebuild switch --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
 ```
+## Hyprland and Noctalia
+
+```bash
+cd /etc/nixos
+```
+
+```bash
+sudo nix --extra-experimental-features "nix-command flakes" flake update --option substituters "https://mirrors.tuna.tsinghua.edu.c
+n/nix-channels/store"
+```
+
+```bash
+sudo nixos-rebuild switch --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" --flake .#nixos
+```
 
 ## Fetch My NixOS Config
 

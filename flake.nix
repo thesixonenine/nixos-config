@@ -1,26 +1,33 @@
 {
-  description = "A simple NixOS flake";
+  description = "NixOS + Hyprland + Noctalia";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    # nixpkgs.url = "git+https://mirrors.nju.edu.cn/git/nixpkgs.git?ref=nixos-26.05&shallow=1";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:denful/import-tree";
-
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake
-    { inherit inputs; }
-    (inputs.import-tree ./modules);
+  outputs = inputs@{
+    self,
+    nixpkgs,
+    noctalia,
+    ...
+  }:
+  {
+    nixosConfigurations.nixos =
+      nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
 
-#  outputs = { self, nixpkgs, ... }@inputs: {
-    # hostname: nixos
-#    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-#      modules = [
-#        ./configuration.nix
-#      ];
-#    };
-#  };
+        specialArgs = {
+          inherit inputs;
+        };
+
+        modules = [
+          ./configuration.nix
+        ];
+      };
+  };
 }
