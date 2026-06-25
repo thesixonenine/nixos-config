@@ -125,11 +125,17 @@ test config
 sudo nixos-rebuild test --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" --flake .#nixos
 ```
 
+prevent Hyprland from generating an auto config
+
+```bash
+mkdir -p ~/.config/hypr && ln -sf /etc/hypr/hyprland.lua ~/.config/hypr/hyprland.lua
+```
+
 cat ~/.bash_profile
 
 ```bash
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-    exec start-hyprland
+    exec start-hyprland --config /etc/hypr/hyprland.lua
 fi
 ```
 
