@@ -4,7 +4,7 @@
 monitor(",preferred,auto,1")
 
 -- Autostart
-exec_onces("noctalia")
+exec_once("noctalia")
 
 -- Input
 input({
