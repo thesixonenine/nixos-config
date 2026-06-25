@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  virtualisation.hypervGuest.enable = true;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -72,8 +74,6 @@
   programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
-    vim
-    git
-    curl
+    vim git curl
   ];
 }

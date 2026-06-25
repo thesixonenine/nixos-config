@@ -66,7 +66,7 @@ curl -x http://192.168.137.1:1080 https://www.google.com
 
 ### Static IP
 
-`存疑`
+`我配置没有生效,反而把原有的网卡挤掉了,此处存疑`
 
 edit `/etc/nixos/configuration.nix`
 
@@ -106,13 +106,23 @@ sudo nixos-rebuild switch --option substituters "https://mirrors.tuna.tsinghua.e
 cd /etc/nixos
 ```
 
+update Nixpkgs Hyprland Noctalia to flake.lock
+
 ```bash
 sudo nix --extra-experimental-features "nix-command flakes" flake update --option substituters "https://mirrors.tuna.tsinghua.edu.c
 n/nix-channels/store"
 ```
 
+update config
+
 ```bash
 sudo nixos-rebuild switch --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" --flake .#nixos
+```
+
+test config
+
+```bash
+sudo nixos-rebuild test --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" --flake .#nixos
 ```
 
 cat ~/.bash_profile

@@ -1,5 +1,5 @@
 {
-  description = "NixOS + Hyprland + Noctalia";
+  description = "NixOS + Hyprland + Noctalia For Hyper-V";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
