@@ -115,6 +115,14 @@ n/nix-channels/store"
 sudo nixos-rebuild switch --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" --flake .#nixos
 ```
 
+cat ~/.bash_profile
+
+```bash
+if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+    exec start-hyprland
+fi
+```
+
 ## Fetch My NixOS Config
 
 ```bash
