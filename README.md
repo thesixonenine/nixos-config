@@ -103,6 +103,10 @@ sudo nixos-rebuild switch --option substituters "https://mirrors.tuna.tsinghua.e
 
 ## Fetch My NixOS Config
 
+> niri does not support software rendering, so niri can't install on Hyper-V. 
+> or configure a GPU passthrough render device with Hyper-V.
+> [GPU passthrough Reference](https://learn.microsoft.com/en-us/troubleshoot/windows-server/virtualization/troubleshoot-hyper-v-gpu-assignment-partitioning-passthrough-issues)
+
 ```bash
 cd && git clone git@github.com:thesixonenine/nixos-config.git
 ```
