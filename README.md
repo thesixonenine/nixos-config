@@ -25,7 +25,7 @@ services.openssh = {
   ports = [ 22 ];
   settings = {
     PasswordAuthentication = true;
-    PermitRootLogin = "prohibit-password";
+    PermitRootLogin = "no";
     AllowUsers = [ "simple" ];
   };
 };
@@ -109,8 +109,7 @@ cd /etc/nixos
 update Nixpkgs Hyprland Noctalia to flake.lock
 
 ```bash
-sudo nix --extra-experimental-features "nix-command flakes" flake update --option substituters "https://mirrors.tuna.tsinghua.edu.c
-n/nix-channels/store"
+sudo NIX_CONFIG="access-tokens = github.com=ghp_xxx" nix --extra-experimental-features "nix-command flakes" flake update
 ```
 
 update config
@@ -137,6 +136,18 @@ cat ~/.bash_profile
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     exec start-hyprland --config /etc/hypr/hyprland.lua
 fi
+```
+
+proxy
+
+```bash
+sudo mkdir -p /run/systemd/system/nix-daemon.service.d/
+sudo tee /run/systemd/system/nix-daemon.service.d/override.conf << EOF
+[Service]
+Environment="https_proxy=http://192.168.137.1:1080"
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart nix-daemon
 ```
 
 ## Fetch My NixOS Config

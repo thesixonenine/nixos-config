@@ -4,7 +4,9 @@
 monitor(",preferred,auto,1")
 
 -- Autostart
-exec_once("noctalia")
+hl.on("hyprland.start", function()
+    hl.exec_cmd("noctalia")
+end)
 
 -- Input
 input({
