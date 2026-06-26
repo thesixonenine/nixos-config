@@ -115,7 +115,7 @@ sudo NIX_CONFIG="access-tokens = github.com=ghp_xxx" nix --extra-experimental-fe
 update config
 
 ```bash
-sudo nixos-rebuild switch --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" --flake .#nixos
+sudo nixos-rebuild switch --flake .#nixos
 ```
 
 test config
