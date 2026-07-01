@@ -61,7 +61,7 @@ networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 test
 
 ```bash
-curl -x http://192.168.137.1:1080 https://www.google.com
+curl -x http://192.168.137.1:1080 https://www.google.com/blank.html
 ```
 
 ### Static IP
