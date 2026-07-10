@@ -14,9 +14,7 @@
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
-              mountOptions = [
-                "umask=0077"
-              ];
+              mountOptions = [ "umask=0077" ];
             };
           };
           luks = {
@@ -26,39 +24,23 @@
               name = "cryptroot";
               content = {
                 type = "btrfs";
-                extraArgs = [
-                  "-f"
-                ];
+                extraArgs = [ "-f" ];
                 subvolumes = {
                   "@root" = {
                     mountpoint = "/";
-                    mountOptions = [
-                      "compress=zstd:3"
-                      "noatime"
-                      "space_cache=v2"
-                    ];
+                    mountOptions = [ "compress=zstd:3" "noatime" "space_cache=v2" ];
                   };
                   "@home" = {
                     mountpoint = "/home";
-                    mountOptions = [
-                      "compress=zstd:3"
-                      "noatime"
-                      "space_cache=v2"
-                    ];
+                    mountOptions = [ "compress=zstd:3" "noatime" "space_cache=v2" ];
                   };
                   "@nix" = {
                     mountpoint = "/nix";
-                    mountOptions = [
-                      "compress-force=zstd:3"
-                      "noatime"
-                    ];
+                    mountOptions = [ "compress-force=zstd:3" "noatime" ];
                   };
                   "@snapshots" = {
                     mountpoint = "/.snapshots";
-                    mountOptions = [
-                      "compress=zstd:3"
-                      "noatime"
-                    ];
+                    mountOptions = [ "compress=zstd:3" "noatime" ];
                   };
                 };
               };
