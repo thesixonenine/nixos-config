@@ -17,6 +17,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos";
   networking.proxy.default = "http://192.168.137.1:1080/";
@@ -79,8 +80,8 @@
     };
   };
   environment.systemPackages = with pkgs; [ vim git curl ];
+  environment.variables.EDITOR = "vim";
   programs.zsh.enable = true;
-
   programs.firefox.enable = true;
 
   services.printing.enable = true;
