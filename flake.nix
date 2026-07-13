@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "git+https://mirrors.nju.edu.cn/git/nixpkgs.git?ref=nixos-26.05&shallow=1";
 
     noctalia = {
       url = "github:noctalia-dev/noctalia";
@@ -12,24 +11,25 @@
     };
   };
 
-  outputs = inputs@{
-    self,
-    nixpkgs,
-    noctalia,
-    ...
-  }:
-  {
-    nixosConfigurations.nixos =
-      nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        specialArgs = {
-          inherit inputs;
-        };
-
-        modules = [
-          ./configuration.nix
-        ];
+  outputs = inputs@{ self, nixpkgs, noctalia, ... }: {
+    # Define a system called "nixos"
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = {
+        inherit inputs;
       };
+      modules = [
+        ./configuration.nix
+      ];
+    };
+    # You can define many systems in one Flake file.
+    # NixOS will choose one based on your hostname.
+    #
+    # nixosConfigurations."nixos2" = nixpkgs.lib.nixosSystem {
+    #   system = "x86_64-linux";
+    #   modules = [
+    #     ./configuration2.nix
+    #   ];
+    # };
   };
 }
