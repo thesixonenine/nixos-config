@@ -19,9 +19,33 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos";
-  # networking.proxy.default = "http://192.168.137.1:1080/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  networking.proxy.default = "http://192.168.137.1:1080/";
+  networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   networking.networkmanager.enable = true;
+  # for hyper-v
+  networking.networkmanager.ensureProfiles.profiles = {
+    "eth0" = {
+      connection = {
+        id = "eth0";
+        uuid = "9f6f3a52-1b88-4b0d-a2d0-8b7e3b4c9a01";
+        type = "ethernet";
+        interface-name = "eth0";
+        autoconnect = true;
+      };
+      ipv4 = {
+        method = "manual";
+        address1 = "192.168.137.20/24,192.168.137.1";
+        dns = "223.5.5.5;223.6.6.6;";
+      };
+      ipv6 = {
+        method = "disabled";
+      };
+      ethernet = {
+        mac-address-blacklist = "";
+      };
+    };
+  };
+  # networking.useDHCP = false;
 
   time.timeZone = "Asia/Shanghai";
 
@@ -39,12 +63,11 @@
   };
   users.users."simple" = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     description = "Simple";
-    initialPassword = "123";
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
+    initialPassword = "1";
+    extraGroups = [ "wheel" "networkmanager" ];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEfY4AqFEB76gUXJKVifON936yf/MdsOKTsmioQ3HDKi" ];
   };
   services.openssh = {
     enable = true;
@@ -55,9 +78,9 @@
       AllowUsers = [ "simple" ];
     };
   };
-  environment.systemPackages = with pkgs; [
-    vim git curl
-  ];
+  environment.systemPackages = with pkgs; [ vim git curl ];
+  programs.zsh.enable = true;
+
   programs.firefox.enable = true;
 
   services.printing.enable = true;
