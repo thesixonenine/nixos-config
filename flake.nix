@@ -4,9 +4,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
   };
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixConfig.experimental-features = [ "nix-command" "flakes" ];
   nixConfig = {
+    experimental-features = [ "nix-command" "flakes" ];
     extra-substituters = [
       "https://hyprland.cachix.org"
       "https://noctalia.cachix.org"
