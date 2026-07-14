@@ -1,7 +1,10 @@
--- Hyprland Lua Config
-
 -- Monitor
-monitor(",preferred,auto,1")
+hl.monitor({
+  output   = "",
+  mode     = "preferred",
+  position = "auto",
+  scale    = "1",
+})
 
 -- Autostart
 hl.on("hyprland.start", function()
@@ -9,25 +12,26 @@ hl.on("hyprland.start", function()
 end)
 
 -- Input
-input({
+hl.config({
+  input = {
     kb_layout = "us"
+  },
 })
 
 -- General
-general({
-    gaps_in = 5,
-    gaps_out = 10,
-    border_size = 2
-})
-
--- Decoration
-decoration({
-    rounding = 8
+hl.config({
+  general = {
+    gaps_in  = 5,
+    gaps_out = 20,
+    border_size = 2,
+  },
+  decoration = {
+    rounding = 8,
+  },
 })
 
 -- Keybindings
-bind("SUPER", "RETURN", "exec", "kitty")
-bind("SUPER", "D", "exec", "wofi --show drun")
-bind("SUPER", "Q", "killactive")
-bind("SUPER", "M", "exit")
-bind("SUPER", "V", "exec", "pavucontrol")
+local terminal = "kitty"
+local mainMod = "SUPER"
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
