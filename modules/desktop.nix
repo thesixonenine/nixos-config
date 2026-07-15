@@ -7,6 +7,7 @@
     algorithm = "zstd";
     memoryPercent = 100;
   };
+  nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
     automatic = true;
@@ -94,5 +95,4 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  nixpkgs.config.allowUnfree = true;
 }
