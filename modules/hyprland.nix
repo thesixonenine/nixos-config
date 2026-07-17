@@ -1,38 +1,20 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  environment.etc."hypr/hyprland.lua".source = ./hyprland.lua;
-
-  security.polkit.enable = true;
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-  };
-
+  programs.hyprland.enable = true;
   environment.systemPackages = with pkgs; [
-    kitty
+    # 终端 启动器 剪贴板        壁纸
+    kitty  wofi wl-clipboard hyprpaper
 
-    hyprpaper
+    # 自动锁屏
     hyprlock
     hypridle
 
-    wl-clipboard
+    # 截图
     grim
     slurp
 
-    brightnessctl
-    playerctl
-
+    # 音频控制
     pavucontrol
-
-    wofi
   ];
 }
