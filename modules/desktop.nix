@@ -22,12 +22,12 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos";
-  networking.proxy.default = "http://192.168.137.1:1080/";
-  networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   networking.nameservers = [ "223.5.5.5" "223.6.6.6" ];
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/networkmanager.nix
   networking.networkmanager.enable = true;
   # for hyper-v
   networking.defaultGateway = "192.168.137.1";
+  networking.proxy.default = "http://192.168.137.1:1080/";
   networking.useDHCP = false;
   networking.networkmanager.ensureProfiles.profiles = {
     "eth0" = {
@@ -43,12 +43,8 @@
         address1 = "192.168.137.20/24,192.168.137.1";
         dns = "223.5.5.5;223.6.6.6;";
       };
-      ipv6 = {
-        method = "disabled";
-      };
-      ethernet = {
-        mac-address-blacklist = "";
-      };
+      ipv6.method = "disabled";
+      ethernet = {};
     };
   };
 
@@ -66,6 +62,7 @@
     LC_TELEPHONE = "zh_CN.UTF-8";
     LC_TIME = "zh_CN.UTF-8";
   };
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/users-groups.nix
   users.users."simple" = {
     isNormalUser = true;
     shell = pkgs.zsh;
@@ -74,10 +71,10 @@
     extraGroups = [ "wheel" "networkmanager" ];
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEfY4AqFEB76gUXJKVifON936yf/MdsOKTsmioQ3HDKi" ];
   };
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/ssh/sshd.nix
   services.openssh = {
     enable = true;
     settings = {
-      PasswordAuthentication = true;
       PermitRootLogin = "no";
       AllowUsers = [ "simple" ];
     };
