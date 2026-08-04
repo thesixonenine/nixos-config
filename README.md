@@ -8,12 +8,20 @@
 sudo nixos-rebuild list-generations
 ```
 
-```bash
-sudo nixos-rebuild switch --flake .#nixos
-```
+`switch generations`
 
 ```bash
-sudo nixos-rebuild switch --flake github:thesixonenine/nixos-config#nixos
+sudo NIX_CONFIG="access-tokens = github.com=github_pat_xxx" \
+HTTP_PROXY="http://192.168.137.1:1080" HTTPS_PROXY="http://192.168.137.1:1080" \
+nixos-rebuild switch --flake /etc/nixos#nixos
+```
+
+from github
+
+```bash
+sudo NIX_CONFIG="access-tokens = github.com=github_pat_xxx" \
+HTTP_PROXY="http://192.168.137.1:1080" HTTPS_PROXY="http://192.168.137.1:1080" \
+nixos-rebuild switch --flake github:thesixonenine/nixos-config#nixos
 ```
 
 ## Install With disko At Hyper-V
@@ -88,15 +96,4 @@ finally, install NixOS
 
 ```bash
 sudo nixos-install --flake .#nixos
-```
-
-
-From tuna
-
-```bash
-nixos-install --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
-```
-
-```bash
-nixos-rebuild --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
 ```
