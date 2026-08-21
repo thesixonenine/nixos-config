@@ -1,26 +1,45 @@
 {
-  description = "A simple NixOS flake";
-
+  description = "My NixOS Flake";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    # nixpkgs.url = "git+https://mirrors.nju.edu.cn/git/nixpkgs.git?ref=nixos-26.05&shallow=1";
-
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:denful/import-tree";
-
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    disko.url = "github:nix-community/disko";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland.url = "github:hyprwm/Hyprland";
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
   };
-
-  outputs = inputs: inputs.flake-parts.lib.mkFlake
-    { inherit inputs; }
-    (inputs.import-tree ./modules);
-
-#  outputs = { self, nixpkgs, ... }@inputs: {
-    # hostname: nixos
-#    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-#      modules = [
-#        ./configuration.nix
-#      ];
-#    };
-#  };
+  # find cachix in `nixos-rebuild switch`
+  nixConfig = {
+    experimental-features = [ "nix-command" "flakes" ];
+    extra-substituters = [
+      "https://hyprland.cachix.org"
+      "https://noctalia.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
+    extra-trusted-substituters = [ "https://hyprland.cachix.org" "https://noctalia.cachix.org" ];
+  };
+  outputs = inputs@{ self, nixpkgs, disko, home-manager, ... }: {
+    # Define a system called "nixos"
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./configuration.nix
+        disko.nixosModules.disko
+        ./disko.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.simple = ./home.nix;
+        }
+      ];
+    };
+  };
 }
