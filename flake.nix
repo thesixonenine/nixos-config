@@ -24,20 +24,20 @@
     extra-trusted-substituters = [ "https://hyprland.cachix.org" "https://noctalia.cachix.org" ];
   };
   outputs = inputs@{ self, nixpkgs, disko, home-manager, ... }: {
-    # Define a system called "nixos"
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    # Define a system called "hyperv"
+    nixosConfigurations.hyperv = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-        ./configuration.nix
+        ./hosts/hyperv/configuration.nix
         disko.nixosModules.disko
-        ./disko.nix
+        ./hosts/hyperv/disko.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.simple = ./home.nix;
+          home-manager.users.simple = ./hosts/hyperv/home.nix;
         }
       ];
     };

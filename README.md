@@ -7,6 +7,76 @@
 > [GPU passthrough Reference](https://learn.microsoft.com/en-us/troubleshoot/windows-server/virtualization/troubleshoot-hyper-v-gpu-assignment-partitioning-passthrough-issues)
 
 
+## Hyper-V
+
+在目标机器上从 ISO 启动到 LiveCD 环境
+
+切换到 root 用户
+
+```bash
+sudo -i
+```
+
+查询 IP 与重置密码, 以便在局域网的其他机器上继续执行安装命令
+
+```bash
+ip a
+passwd
+```
+
+在局域网的其他机器上继续执行
+
+将配置文件复制到目标机器上
+
+```bash
+scp -r ./hosts root@192.168.137.41:/root/
+scp ./flake.nix root@192.168.137.41:/root/
+scp ./flake.lock root@192.168.137.41:/root/
+```
+
+登录目标机器
+
+```bash
+ssh root@192.168.137.41
+```
+
+分区
+
+```bash
+sudo NIX_CONFIG="access-tokens = github.com=github_pat_xxx" \
+HTTP_PROXY="http://192.168.137.1:1080" HTTPS_PROXY="http://192.168.137.1:1080" \
+nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /root/hosts/hyperv/disko.nix
+```
+
+
+生成配置
+
+```bash
+nixos-generate-config --no-filesystems --root /mnt
+```
+
+移动自定义配置
+
+```bash
+mv -f /root/hosts /mnt/etc/nixos/
+mv -f /root/flake.nix /mnt/etc/nixos/
+mv -f /root/flake.lock /mnt/etc/nixos/
+```
+
+执行安装
+
+```bash
+sudo NIX_CONFIG="access-tokens = github.com=github_pat_xxx" \
+HTTP_PROXY="http://192.168.137.1:1080" HTTPS_PROXY="http://192.168.137.1:1080" \
+nixos-install --flake /mnt/etc/nixos#hyperv
+```
+
+关机
+
+```bash
+sudo shutdown now
+```
+
 ## Command
 
 ```bash

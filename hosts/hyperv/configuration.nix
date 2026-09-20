@@ -5,7 +5,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   networking.networkmanager.enable = true;
   system.stateVersion = "26.05";
-  networking.hostName = "nixos";
+  networking.hostName = "hyperv";
   networking.proxy.default = "http://192.168.137.1:1080";
   networking.networkmanager.ensureProfiles.profiles = {
     "eth0" = {
@@ -55,7 +55,7 @@
   environment.systemPackages = with pkgs; [ vim git curl ];
   environment.variables.EDITOR = "vim";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.access-tokens = [ "github.com=github_pat_xxx" ];
+  # nix.settings.access-tokens = [ "github.com=github_pat_xxx" ];
   # Hyprland Noctalia
   nix.settings = {
     extra-substituters = ["https://hyprland.cachix.org" "https://noctalia.cachix.org"];
