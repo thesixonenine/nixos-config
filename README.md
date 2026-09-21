@@ -43,7 +43,7 @@ ssh root@192.168.137.41
 分区
 
 ```bash
-sudo NIX_CONFIG="access-tokens = github.com=github_pat_xxx" \
+NIX_CONFIG="access-tokens = github.com=github_pat_xxx" \
 HTTP_PROXY="http://192.168.137.1:1080" HTTPS_PROXY="http://192.168.137.1:1080" \
 nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /root/hosts/hyperv/disko.nix
 ```
@@ -58,15 +58,15 @@ nixos-generate-config --no-filesystems --root /mnt
 移动自定义配置
 
 ```bash
-mv -f /root/hosts /mnt/etc/nixos/
-mv -f /root/flake.nix /mnt/etc/nixos/
-mv -f /root/flake.lock /mnt/etc/nixos/
+mv -f /root/hosts /mnt/etc/nixos/ && \
+mv -f /root/flake.nix /mnt/etc/nixos/ && \
+mv -f /root/flake.lock /mnt/etc/nixos/ && \
 ```
 
 执行安装
 
 ```bash
-sudo NIX_CONFIG="access-tokens = github.com=github_pat_xxx" \
+yes | NIX_CONFIG="access-tokens = github.com=github_pat_xxx" \
 HTTP_PROXY="http://192.168.137.1:1080" HTTPS_PROXY="http://192.168.137.1:1080" \
 nixos-install --flake /mnt/etc/nixos#hyperv
 ```
@@ -74,7 +74,7 @@ nixos-install --flake /mnt/etc/nixos#hyperv
 关机
 
 ```bash
-sudo shutdown now
+shutdown now
 ```
 
 ## Command
