@@ -77,6 +77,32 @@ nixos-install --flake /mnt/etc/nixos#hyperv
 shutdown now
 ```
 
+重启
+
+查看现有连接
+
+```bash
+nmcli -f NAME,UUID,FILENAME connection show
+```
+
+停止已有连接
+
+```bash
+nmcli connection down "Wired connection 1"
+```
+
+启动配置连接
+
+```bash
+nmcli connection up eth0
+```
+
+删除已停止连接
+
+```bash
+nmcli connection delete "Wired connection 1"
+```
+
 ## Command
 
 ```bash
