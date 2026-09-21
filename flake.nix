@@ -41,5 +41,23 @@
         }
       ];
     };
+
+    # Define a system called "itx"
+    nixosConfigurations.itx = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./hosts/itx/configuration.nix
+        disko.nixosModules.disko
+        ./hosts/itx/disko.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.simple = ./hosts/itx/home.nix;
+        }
+      ];
+    };
   };
 }
