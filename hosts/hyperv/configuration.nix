@@ -5,7 +5,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   networking.networkmanager.enable = true;
   system.stateVersion = "26.05";
-  networking.hostName = "hyperv";
+  networking.hostName = "nixos10";
   networking.proxy.default = "http://192.168.137.1:1080";
   networking.networkmanager.ensureProfiles.profiles = {
     "eth0" = {
