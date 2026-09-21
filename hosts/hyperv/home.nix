@@ -27,6 +27,9 @@
       ".." = "cd ..";
       ll = "ls -ahl";
     };
+    initContent = ''
+      if [ -f ~/.shellrc ]; then source ~/.shellrc; fi
+    '';
   };
   programs.alacritty = {
     enable = true;
