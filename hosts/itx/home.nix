@@ -9,6 +9,7 @@
     ripgrep eza fzf jq fd bat
     age expect openssl
     aria2 socat nmap lsof
+    chezmoi
   ];
 
   programs.git = {
