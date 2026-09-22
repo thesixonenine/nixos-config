@@ -17,6 +17,10 @@
       user.name = "Simple";
       user.email = "thesixonenine@outlook.com";
       alias.st = "status";
+      alias.ci = "commit";
+      alias.lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+      alias.ps = "push";
+      alias.pl = "pull --rebase";
     };
   };
   programs.zsh = {
@@ -27,7 +31,7 @@
       nv = "nvim";
       ".." = "cd ..";
       ll = "ls -ahl";
-      "nixos-rebuild-switch" = "sudo nixos-rebuild switch --flake ~/nixos-config#itx";
+      "nixos-rebuild-switch" = "sudo nixos-rebuild switch --flake ~/nixos-config#hyperv";
       "nix-flake-update" = "sudo nix flake update --flake ~/nixos-config";
     };
     initContent = ''

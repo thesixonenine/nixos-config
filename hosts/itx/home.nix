@@ -18,6 +18,10 @@
       user.name = "Simple";
       user.email = "thesixonenine@outlook.com";
       alias.st = "status";
+      alias.ci = "commit";
+      alias.lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+      alias.ps = "push";
+      alias.pl = "pull --rebase";
     };
   };
   programs.zsh = {
