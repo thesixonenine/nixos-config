@@ -17,6 +17,7 @@
     settings = {
       user.name = "Simple";
       user.email = "thesixonenine@outlook.com";
+      alias.st = "status";
     };
   };
   programs.zsh = {
@@ -27,6 +28,8 @@
       nv = "nvim";
       ".." = "cd ..";
       ll = "ls -ahl";
+      "nixos-rebuild-switch" = "sudo nixos-rebuild switch --flake ~/nixos-config#itx";
+      "nix-flake-update" = "sudo nix flake update --flake ~/nixos-config#itx";
     };
     initContent = ''
       if [ -f ~/.shellrc ]; then source ~/.shellrc; fi

@@ -16,6 +16,7 @@
     settings = {
       user.name = "Simple";
       user.email = "thesixonenine@outlook.com";
+      alias.st = "status";
     };
   };
   programs.zsh = {
