@@ -27,6 +27,8 @@
       nv = "nvim";
       ".." = "cd ..";
       ll = "ls -ahl";
+      "nixos-rebuild-switch" = "sudo nixos-rebuild switch --flake ~/nixos-config#itx";
+      "nix-flake-update" = "sudo nix flake update --flake ~/nixos-config";
     };
     initContent = ''
       if [ -f ~/.shellrc ]; then source ~/.shellrc; fi
