@@ -12,7 +12,10 @@
     aria2 socat nmap lsof
     chezmoi
   ];
-
+  programs.keepassxc = {
+    autostart = true;
+    enable = true;
+  };
   programs.git = {
     enable = true;
     settings = {
