@@ -13,7 +13,6 @@
     chezmoi
   ];
   programs.keepassxc = {
-    autostart = true;
     enable = true;
   };
   programs.git = {
