@@ -3,6 +3,7 @@
   home.homeDirectory = "/home/simple";
 
   home.packages = with pkgs;[
+    firefox
     alacritty
     fastfetch nnn
     zip xz unzip
