@@ -59,6 +59,7 @@
 
     -- Autostart
     hl.on("hyprland.start", function()
+        hl.exec_cmd("fcitx5 -d")
         hl.exec_cmd("noctalia")
     end)
 
@@ -97,6 +98,12 @@
     hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
     hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
     hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+  '';
+  # rime-ice 在 nixpkgs 中把 default.yaml 改名为 rime_ice_suggestion.yaml，
+  # 而 fcitx5-rime 会补一个空的 default.yaml，必须打这个补丁才会有方案可用
+  home.file.".local/share/fcitx5/rime/default.custom.yaml".text = ''
+    patch:
+      __include: rime_ice_suggestion:/
   '';
   home.file."wallpapers/default.png".source = ./wallpaper.png;
   home.file.".config/noctalia/config.toml".text = ''

@@ -50,6 +50,23 @@
           ];
         })
       ];
+      # 首次启动且没有 ~/.config/fcitx5/profile 时生效
+      settings.inputMethod = {
+        "Groups/0" = {
+          Name = "Default";
+          "Default Layout" = "us";
+          DefaultIM = "rime";
+        };
+        "Groups/0/Items/0" = {
+          Name = "keyboard-us";
+          Layout = "";
+        };
+        "Groups/0/Items/1" = {
+          Name = "rime";
+          Layout = "";
+        };
+        GroupOrder."0" = "Default";
+      };
     };
   };
   users.users."simple" = {
@@ -66,7 +83,7 @@
       AllowUsers = [ "simple" ];
     };
   };
-  environment.systemPackages = with pkgs; [ vim git curl ];
+  environment.systemPackages = with pkgs; [ vim git curl qt6Packages.fcitx5-configtool ];
   environment.variables.EDITOR = "vim";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # nix.settings.access-tokens = [ "github.com=github_pat_xxx" ];
